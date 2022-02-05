@@ -10,7 +10,7 @@
     <packaging>war</packaging>
 
     <name>novel-admin</name>
-    <description>小说精品屋后台管理</description>
+    <description>精品屋后台管理</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>

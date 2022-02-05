@@ -12,8 +12,8 @@
     <artifactId>novel-common</artifactId>
     <packaging>jar</packaging>
     <name>novel-common</name>
-    <description>小说精品屋 通用模块</description>
-    
+    <description>精品屋 通用模块</description>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
