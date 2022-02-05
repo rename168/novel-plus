@@ -10,6 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>novel-crawl</artifactId>
+    <packaging>war</packaging>
 
     <name>novel-crawl</name>
     <description>小说精品屋 爬虫管理程序</description>

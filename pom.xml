@@ -85,7 +85,7 @@
     <!-- maven阿里的镜像使用的默认mirrorOf规则=*, 所有的仓库都被镜像，需要改成 *,!oss -->
     <!-- 另外需要注意的是，由于镜像仓库完全屏蔽了被镜像仓库，当镜像仓库不稳定或者停止服务的时候，
     Maven仍将无法访问被镜像仓库，因而将无法下载依赖。-->
-    <repositories>
+    <!-- <repositories>
         <repository>
             <id>ali</id>
             <url>https://maven.aliyun.com/repository/public</url>
@@ -108,5 +108,5 @@
                 <enabled>false</enabled>
             </snapshots>
         </pluginRepository>
-    </pluginRepositories>
+    </pluginRepositories> -->
 </project>
