@@ -76,7 +76,7 @@ public class SysUserController extends BaseController {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(MD5Utils.encrypt("admin", "admin"));
+		System.out.println( " ----admin :" +  MD5Utils.encrypt("admin", "admin"));
 	}
 
 	@RequiresPermissions("sys:user:add")
