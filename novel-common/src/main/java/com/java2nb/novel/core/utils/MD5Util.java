@@ -2,7 +2,7 @@ package com.java2nb.novel.core.utils;
 
 
 import lombok.SneakyThrows;
-import sun.misc.BASE64Encoder;
+// import sun.misc.BASE64Encoder;
 
 import java.security.MessageDigest;
 
@@ -44,15 +44,15 @@ public class MD5Util {
         }
     }
 
-    @SneakyThrows
-    public static String MD5New(String str) {
-        //首先利用MD5算法将密码加密，变成等长字节
-        MessageDigest md = MessageDigest.getInstance("MD5");
-        byte[] b1 = md.digest(str.getBytes());
-        //将等长字节利用Base64算法转换成字符串
-        BASE64Encoder encoder = new BASE64Encoder();
-        return encoder.encode(b1);
-    }
+    // @SneakyThrows
+    // public static String MD5New(String str) {
+    //     //首先利用MD5算法将密码加密，变成等长字节
+    //     MessageDigest md = MessageDigest.getInstance("MD5");
+    //     byte[] b1 = md.digest(str.getBytes());
+    //     //将等长字节利用Base64算法转换成字符串
+    //     BASE64Encoder encoder = new BASE64Encoder();
+    //     return encoder.encode(b1);
+    // }
 
     private static final String[] HEX_DIGITS = {"0", "1", "2", "3", "4", "5",
             "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"};
