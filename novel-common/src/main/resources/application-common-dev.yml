@@ -23,7 +23,7 @@ spring:
     #连接超时时间（毫秒）
     timeout: 30000
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/novel_biz?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://127.0.0.1:3306/novel_plus?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
     username: lm
     password: test123456
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -74,4 +74,4 @@ sharding:
 txt:
   save:
     storage: db #存储介质，db：数据库，file：txt文本
-    path: /Users/xiongxiaoyang/books  #txt小说文本保存路径
+    path: F:/work/novelData  #txt小说文本保存路径
