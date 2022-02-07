@@ -183,16 +183,16 @@ public class CrawlParser {
 
                 BookIndex hasIndex = existBookIndexMap.get(indexNum);
                 if(indexNameMatch.groupCount()<=1){
-                    logger.info(String.format("--indexNameMatch.groupCount()<=1  %s  \n   %s  \n   ", ruleBean.getIndexNamePatten(),indexListUrl)) ;
-                    continue;
+                    logger.info(String.format("--indexNameMatch.groupCount()<=1  %s  \n   %s  \n   %s  ", ruleBean.getIndexNamePatten(),indexListUrl,indexListHtml ) ) ;
+                    break;
                 }
                 String indexName = indexNameMatch.group(1);
 
                 if (hasIndex == null || !StringUtils.deleteWhitespace(hasIndex.getIndexName()).equals(StringUtils.deleteWhitespace(indexName))) {
 
                     if(indexIdMatch.groupCount()<=1){
-                        logger.info(String.format("--indexIdMatch.groupCount()<=1  %s  \n   %s  \n  ", ruleBean.getIndexIdPatten(),indexListUrl)) ;
-                        continue;
+                        logger.info(String.format("--indexIdMatch.groupCount()<=1  %s  \n   %s  \n   %s ", ruleBean.getIndexIdPatten(),indexListUrl ,indexListHtml )) ;
+                        break;
                     }
                     String sourceIndexId = indexIdMatch.group(1);
                     String bookContentUrl = ruleBean.getBookContentUrl();
