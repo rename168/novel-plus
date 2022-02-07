@@ -8,6 +8,8 @@ import com.java2nb.novel.utils.Constants;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -25,6 +27,7 @@ import static java.util.regex.Pattern.compile;
  */
 @Slf4j
 public class CrawlParser {
+    private final static Logger logger = LoggerFactory.getLogger(CrawlParser.class);
 
     private static final IdWorker idWorker = new IdWorker();
 
@@ -56,8 +59,11 @@ public class CrawlParser {
                         Pattern picUrlPatten = compile(ruleBean.getPicUrlPatten());
                         Matcher picUrlMatch = picUrlPatten.matcher(bookDetailHtml);
                         boolean isFindPicUrl = picUrlMatch.find();
+                        // logger.info(String.format("  --PicUrlPatten  %s   %s  ", ruleBean.getPicUrlPatten(), bookDetailHtml)) ;
                         if (isFindPicUrl) {
-                            String picUrl = picUrlMatch.group(1);
+                            Integer i = picUrlMatch.groupCount()-1 ;
+                            i= Math.max (0,i);
+                            String picUrl = picUrlMatch.group(i);
                             if (StringUtils.isNotBlank(picUrl) && StringUtils.isNotBlank(ruleBean.getPicUrlPrefix())) {
                                 picUrl = ruleBean.getPicUrlPrefix() + picUrl;
                             }
@@ -87,15 +93,22 @@ public class CrawlParser {
                     }
 
                     String desc = bookDetailHtml.substring(bookDetailHtml.indexOf(ruleBean.getDescStart()) + ruleBean.getDescStart().length());
-                    desc = desc.substring(0, desc.indexOf(ruleBean.getDescEnd()));
-                    //过滤掉简介中的特殊标签
-                    desc = desc.replaceAll("<a[^<]+</a>", "")
-                            .replaceAll("<font[^<]+</font>", "")
-                            .replaceAll("<p>\\s*</p>", "")
-                            .replaceAll("<p>", "")
-                            .replaceAll("</p>", "<br/>");
-                    //设置书籍简介
-                    book.setBookDesc(desc);
+                    if(ruleBean.getDescStart()!=null &&  ruleBean.getDescEnd() !=null ){
+
+                        logger.info(String.format("  --getDescStart  %s  \n  %s  \n  %s", ruleBean.getDescStart(),bookDetailUrl, ruleBean)) ;
+
+                        desc = desc.substring(0, desc.indexOf(ruleBean.getDescEnd()));
+                        //过滤掉简介中的特殊标签
+                        desc = desc.replaceAll("<a[^<]+</a>", "")
+                                .replaceAll("<font[^<]+</font>", "")
+                                .replaceAll("<p>\\s*</p>", "")
+                                .replaceAll("<p>", "")
+                                .replaceAll("</p>", "<br/>");
+                        //设置书籍简介
+                        book.setBookDesc(desc);
+                    }else{
+                        book.setBookDesc("");
+                    }
                     if (StringUtils.isNotBlank(ruleBean.getStatusPatten())) {
                         Pattern bookStatusPatten = compile(ruleBean.getStatusPatten());
                         Matcher bookStatusMatch = bookStatusPatten.matcher(bookDetailHtml);
@@ -169,10 +182,18 @@ public class CrawlParser {
             while (isFindIndex) {
 
                 BookIndex hasIndex = existBookIndexMap.get(indexNum);
+                if(indexNameMatch.groupCount()<=1){
+                    logger.info(String.format("--indexNameMatch.groupCount()<=1  %s  \n   %s  \n   ", ruleBean.getIndexNamePatten(),indexListUrl)) ;
+                    continue;
+                }
                 String indexName = indexNameMatch.group(1);
 
                 if (hasIndex == null || !StringUtils.deleteWhitespace(hasIndex.getIndexName()).equals(StringUtils.deleteWhitespace(indexName))) {
 
+                    if(indexIdMatch.groupCount()<=1){
+                        logger.info(String.format("--indexIdMatch.groupCount()<=1  %s  \n   %s  \n  ", ruleBean.getIndexIdPatten(),indexListUrl)) ;
+                        continue;
+                    }
                     String sourceIndexId = indexIdMatch.group(1);
                     String bookContentUrl = ruleBean.getBookContentUrl();
                     int calStart = bookContentUrl.indexOf("{cal_");

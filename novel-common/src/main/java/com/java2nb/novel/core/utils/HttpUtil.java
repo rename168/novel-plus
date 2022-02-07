@@ -34,7 +34,7 @@ public class HttpUtil {
     }
     private static Map<String, Long > urlMap = new ConcurrentHashMap<>();
 
-
+    private static long reqCount = 0 ;
     public static String getByHttpClientWithChrome(String url) {
         try {
             Long lasttime = urlMap.get(url) ;
@@ -44,7 +44,7 @@ public class HttpUtil {
                 t.printStackTrace();
                 return null ;
             }
-            logger.info(String.format( "getByHttpClientWithChrome url: %s " , url)) ;
+            logger.info(String.format( "getByHttpClientWithChrome reqCount %d,  url: %s ",reqCount++ , url)) ;
 
             // StackTraceElement[] a = new Throwable().getStackTrace()
             // new Throwable().printStackTrace(  );
