@@ -13,9 +13,9 @@
 	"pagePatten": "value=\"(\\d+)/10\"",
 	"totalPagePatten": "value=\"\\d+/(\\d+)\"",
 	"bookDetailUrl": "https://m.dingdian6.com/book{bookId}",
-	"bookNamePatten": "([^/]+)",
+	"bookNamePatten": "<span class=\"title\">([^/]+)</span>",
 	"authorNamePatten": ">作者：([^/]+)<",
-	"picUrlPatten": "\"\\s+onerror=\"this.src=",
+	"picUrlPatten": "<img src=\"([^>]+)\"\\s+onerror=\"this.src=",
 	"statusPatten": "状态：([^/]+)",
 	"bookStatusRule": {
 		"连载": 0,
@@ -28,8 +28,8 @@
 	"upadateTimeFormatPatten": "yyyy-MM-dd",
 	"bookIndexUrl": "https://m.dingdian6.com/book{bookId}.html",
 	"bookIndexStart": "直达页面底部</a></p>",
-	"indexIdPatten": "<p>\\s+<a\\s+style=\"\"\\s+href=\"/book\\d+/(\\d+)\\.html\">[^/]+</a>\\s+</p>",
-	"indexNamePatten": "<p>\\s+<a\\s+style=\"\"\\s+href=\"/book\\d+/\\d+\\.html\">([^/]+)</a>\\s+</p>",
+	"indexIdPatten": "<a\\s+style=\"\"\\s+href=\"/book\\d+/(\\d+)\\.html\">[^/]+</a>",
+	"indexNamePatten": "<a\\s+style=\"\"\\s+href=\"/book\\d+/\\d+\\.html\">([^/]+)</a>",
 	"bookContentUrl": "https://www.dingdian6.com/book{bookId}/{indexId}.html",
 	"contentStart": "id=\"TXT\">",
 	"contentEnd": "<script"
