@@ -23,8 +23,8 @@ spring:
     #连接超时时间（毫秒）
     timeout: 30000
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/novel_biz?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
-    username: root
+    url: jdbc:mysql://127.0.0.1:3306/novel_plus?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: lm
     password: test123456
     driver-class-name: com.mysql.cj.jdbc.Driver
 
@@ -41,7 +41,7 @@ sharding:
         type: com.zaxxer.hikari.HikariDataSource
         driver-class-name: com.mysql.cj.jdbc.Driver
         jdbc-url: jdbc:mysql://localhost:3306/novel_plus?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
-        username: root
+        username: lm
         password: test123456
     #      ds1:
     #        type: com.alibaba.druid.pool.DruidDataSource
@@ -77,7 +77,7 @@ logging:
 txt:
   save:
     storage: db #存储介质，db：数据库，file：txt文本
-    path: /Users/xiongxiaoyang/books  #txt小说文本保存路径
+    path: C:/novelData  #txt小说文本保存路径
 
 
 
