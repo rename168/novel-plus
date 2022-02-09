@@ -9,12 +9,12 @@
 		"catId6": "6",
 		"catId7": "7"
 	},
-	"bookIdPatten": "href=\"/book/(\\d+)/\"",
+	"bookIdPatten": "href=\"/book/(\\d+)",
 	"pagePatten": "value=\"(\\d+)/10\"",
 	"totalPagePatten": "value=\"\\d+/(\\d+)\"",
 	"bookDetailUrl": "https://m.x23us.us/book/{bookId}",
 	"bookNamePatten": "<span class=\"title\">([^/]+)</span>",
-	"authorNamePatten": ">作者：([^/]+)<",
+	"authorNamePatten": "<a href=\"/author/[^/]+\">([^/]+)</a>",
 	"picUrlPatten": "<img src=\"([^>]+)\"\\s+onerror=\"this.src=",
 	"statusPatten": "状态：([^/]+)",
 	"bookStatusRule": {
