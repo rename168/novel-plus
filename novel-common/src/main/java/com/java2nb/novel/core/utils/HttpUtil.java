@@ -38,8 +38,8 @@ public class HttpUtil {
     public static String getByHttpClientWithChrome(String url) {
         try {
             Long lasttime = urlMap.get(url) ;
-            if( lasttime !=null  && System.currentTimeMillis()-lasttime<3000 ){
-                logger.error(String.format( " 已经正在请求 reqCount %d, url: %s  time:%d" ,reqCount++ , url , System.currentTimeMillis()-lasttime)) ;
+            if( lasttime !=null  && System.currentTimeMillis()-lasttime<1000 ){
+                logger.error(String.format( " System.currentTimeMillis()-lasttime<1000 reqCount %d, url: %s  time:%d" ,reqCount++ , url , System.currentTimeMillis()-lasttime)) ;
                 // Throwable t =  new Throwable(url) ;
                 // t.printStackTrace();
                 // return null ;
@@ -59,7 +59,7 @@ public class HttpUtil {
                 return null;
             }
         } catch (Exception e) {
-            logger.error(String.format( " 请求失败 url: %s  Message:%s" , url ,e.getMessage())) ;
+            logger.error(String.format( " request failed url: %s  Message:%s" , url ,e.getMessage())) ;
 
             e.printStackTrace();
             return null;
