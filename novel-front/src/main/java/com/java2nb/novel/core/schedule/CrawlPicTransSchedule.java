@@ -46,7 +46,7 @@ public class CrawlPicTransSchedule {
         for (Book book : networkPicBooks) {
             bookService.updateBookPicToLocal(book.getPicUrl(), book.getId());
             //3秒钟转化一张图片，10分钟转化200张
-            Thread.sleep(3000);
+            Thread.sleep(1000);
         }
 
 

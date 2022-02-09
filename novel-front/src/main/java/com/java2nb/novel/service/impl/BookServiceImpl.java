@@ -479,7 +479,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void updateBookPicToLocal(String picUrl, Long bookId) {
-
+        log.info("updateBookPicToLocal  %s ", picUrl );
         picUrl = fileService.transFile(picUrl, picSavePath);
 
         bookMapper.update(update(book)

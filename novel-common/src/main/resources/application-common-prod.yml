@@ -52,7 +52,7 @@ sharding:
     config:
       sharding:
         props:
-          sql.show: true
+          sql.show: false 
         tables:
           book_content:  #book_content表
             key-generator-column-name: id  #主键

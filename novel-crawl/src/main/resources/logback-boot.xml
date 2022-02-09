@@ -61,4 +61,9 @@
         <appender-ref ref="STDOUT" />
         <appender-ref ref="FILE" />
     </logger>
+
+    <logger name="org.apache.ibatis" level="warn"/>
+    <logger name="org.mybatis" level="warn"/>
+    <logger name="org.apache.ibatis.logging.jdbc.BaseJdbcLogger" level="warn" />
+ 
 </configuration>
