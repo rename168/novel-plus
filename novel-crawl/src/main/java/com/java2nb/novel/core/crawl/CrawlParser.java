@@ -63,6 +63,8 @@ public class CrawlParser {
                             }
                             //设置封面图片路径
                             book.setPicUrl(picUrl);
+                        }else {
+                            new Throwable(String.format(" picUrl failed  bookDetailUrl %s   ,  pattern %s" , bookDetailUrl, ruleBean.getPicUrlPatten() )).printStackTrace();
                         }
                     }
                     if (StringUtils.isNotBlank(ruleBean.getScorePatten())) {
@@ -160,6 +162,10 @@ public class CrawlParser {
             Matcher indexNameMatch = indexNamePatten.matcher(indexListHtml);
 
             boolean isFindIndex = indexIdMatch.find() & indexNameMatch.find();
+            if( !isFindIndex ){
+                log.error("indexIdPatten or  indexNamePatten failed   indexListUrl：%s  indexIdMatch %b   indexNameMatch %b",indexListUrl , indexIdMatch.find(), indexNameMatch.find());
+                new Throwable().printStackTrace();
+            }
 
             int indexNum = 0;
 
@@ -207,7 +213,11 @@ public class CrawlParser {
 
                     //查询章节内容
                     String contentHtml = getByHttpClientWithChrome(contentUrl);
-                    if (contentHtml != null && !contentHtml.contains("正在手打中")) {
+                    if (contentHtml != null ) {
+                        if (contentHtml.contains("正在手打中")){
+                            log.error("发现 正在手打中     contentUrl%s   ",contentUrl    );
+                        }
+
                         String content = contentHtml.substring(contentHtml.indexOf(ruleBean.getContentStart()) + ruleBean.getContentStart().length());
                         content = content.substring(0, content.indexOf(ruleBean.getContentEnd()));
                         //插入章节目录和章节内容
@@ -246,6 +256,9 @@ public class CrawlParser {
                         bookIndex.setUpdateTime(currentDate);
 
 
+                    }else {
+                        log.error(" 查询章节内容 failed   contentUrl%s   ",contentUrl    );
+                        new Throwable().printStackTrace();
                     }
 
 
@@ -278,6 +291,10 @@ public class CrawlParser {
 
             }
 
+        }
+        else {
+            log.error( "bookIndexUrl: %s   \n%s",  indexListUrl , ruleBean.getBookIndexUrl() );
+            new Throwable().printStackTrace();
         }
 
         handler.handle(new ChapterBean() {{

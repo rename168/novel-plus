@@ -280,6 +280,9 @@ public class CrawlServiceImpl implements CrawlService {
         CrawlParser.parseBook(ruleBean, bookId, book -> {
             if(book.getBookName() == null || book.getAuthorName() == null){
                 return;
+            }else{
+                log.error( " getBookName  or getAuthorName   not find  %s  %s", book.getBookName(),book.getAuthorName() ) ;
+                new Throwable().printStackTrace();
             }
             //这里只做新书入库，查询是否存在这本书
             Book existBook = bookService.queryBookByBookNameAndAuthorName(book.getBookName(), book.getAuthorName());

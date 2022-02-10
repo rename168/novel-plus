@@ -9,10 +9,10 @@
 		"catId6": "6",
 		"catId7": "7"
 	},
-	"bookIdPatten": "href=\"/book/(\\d+).html\"",
+	"bookIdPatten": "href=\"/book/(\\d+)/\"",
 	"pagePatten": "value=\"(\\d+)/10\"",
 	"totalPagePatten": "value=\"\\d+/(\\d+)\"",
-	"bookDetailUrl": "http://m.2wxs.net/book/{bookId}.html",
+	"bookDetailUrl": "http://m.2wxs.net/book/{bookId}",
 	"bookNamePatten": "<span class=\"title\">([^/]+)</span>",
 	"authorNamePatten": ">作者：([^/]+)<",
 	"picUrlPatten": "<img src=\"([^>]+)\"\\s+onerror=\"this.src=",
@@ -26,11 +26,11 @@
 	"descEnd": "</p>",
 	"upadateTimePatten": "更新：(\\d+-\\d+-\\d+)",
 	"upadateTimeFormatPatten": "yyyy-MM-dd",
-	"bookIndexUrl": "http://m.2wxs.net/xstxt/{bookId}/",
+	"bookIndexUrl": "http://m.2wxs.net/book/{bookId}.html",
 	"bookIndexStart": "直达页面底部</a></p>",
-	"indexIdPatten": "<a href='/xstxt/\\d+/(\\d+)\\.html'>[^/]+</a>",
-	"indexNamePatten": "<a href='/xstxt/\\d+/\\d+\\.html'>([^/]+)</a>",
-	"bookContentUrl": "http://m.2wxs.net/xstxt/{bookId}/{indexId}.html",
-	"contentStart": "_Middle();</script>--></div>",
-	"contentEnd": "<p style=\"width:100%;text-alight:center;\">"
+	"indexIdPatten": "<a\\s+style=\"\"\\s+href=\"/book/\\d+/(\\d+)\\.html\">[^/]+</a>",
+	"indexNamePatten": "<a\\s+style=\"\"\\s+href=\"/book/\\d+/\\d+\\.html\">([^/]+)</a>",
+	"bookContentUrl": "http://www.2wxs.net/book/{bookId}/{indexId}.html",
+	"contentStart": "id=\"TXT\">",
+	"contentEnd": "<script"
 }

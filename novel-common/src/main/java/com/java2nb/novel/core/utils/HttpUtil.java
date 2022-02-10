@@ -1,6 +1,5 @@
 package com.java2nb.novel.core.utils;
 
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -32,9 +31,11 @@ public class HttpUtil {
             return null;
         }
     }
-    private static Map<String, Long > urlMap = new ConcurrentHashMap<>();
 
-    private static long reqCount = 0 ;
+    private static Map<String, Long> urlMap = new ConcurrentHashMap<>();
+
+    private static long reqCount = 0;
+
     public static String getByHttpClientWithChrome(String url) {
         try {
             Long lasttime = urlMap.get(url) ;
@@ -53,6 +54,13 @@ public class HttpUtil {
             urlMap.put(url, System.currentTimeMillis() );
             ResponseEntity<String> forEntity = restTemplate.exchange(url.toString(), HttpMethod.GET, requestEntity, String.class);
 
+            if( forEntity.getHeaders().getLocation()!=null  ){
+                String msg = String.format( "getLocation()!=null %s,  url: %s ", forEntity.getHeaders().getLocation(), url);
+                // logger.error(String.format( "getLocation()!=null %s,  url: %s ", forEntity.getHeaders().getLocation(), url)) ;
+                new Throwable(msg).printStackTrace();
+                forEntity = restTemplate.exchange(forEntity.getHeaders().getLocation(), HttpMethod.GET, requestEntity, String.class);
+
+            }
             if (forEntity.getStatusCode() == HttpStatus.OK) {
                 return forEntity.getBody();
             } else {

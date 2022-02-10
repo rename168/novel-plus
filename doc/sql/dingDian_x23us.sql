@@ -9,7 +9,7 @@
 		"catId6": "6",
 		"catId7": "7"
 	},
-	"bookIdPatten": "href=\"/book/(\\d+)",
+	"bookIdPatten": "href=\"/book/(\\d+)/\"",
 	"pagePatten": "value=\"(\\d+)/10\"",
 	"totalPagePatten": "value=\"\\d+/(\\d+)\"",
 	"bookDetailUrl": "https://m.x23us.us/book/{bookId}",
@@ -26,11 +26,11 @@
 	"descEnd": "</p>",
 	"upadateTimePatten": "更新：(\\d+-\\d+-\\d+)",
 	"upadateTimeFormatPatten": "yyyy-MM-dd",
-	"bookIndexUrl": "https://m.x23us.us/book/{bookId}.html",
+	"bookIndexUrl": "https://m.x23us.us/book/{bookId}/all.html",
 	"bookIndexStart": "直达页面底部</a></p>",
-	"indexIdPatten": "<a\\s+style=\"\"\\s+href=\"/book/\\d+/(\\d+)\\.html\">[^/]+</a>",
-	"indexNamePatten": "<a\\s+style=\"\"\\s+href=\"/book/\\d+/\\d+\\.html\">([^/]+)</a>",
-	"bookContentUrl": "https://www.x23us.us/book/{bookId}/{indexId}.html",
-	"contentStart": "id=\"TXT\">",
-	"contentEnd": "<script"
+	"indexIdPatten": "<a href='/book/\\d+/(\\d+)\\.html'>[^/]+</a>",
+	"indexNamePatten": "<a href='/book/\\d+/\\d+\\.html'>([^/]+)</a>",
+	"bookContentUrl": "https://m.x23us.us/book/{bookId}/{indexId}.html",
+	"contentStart": "<b>最新网址：m.x23us.us</b></div>",
+	"contentEnd": "<div id=\"center_tip\">"
 }
