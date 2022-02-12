@@ -1,7 +1,7 @@
 package com.java2nb.novel.entity;
 
-import javax.annotation.Generated;
 import java.util.Date;
+import javax.annotation.Generated;
 
 public class BookIndex {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
@@ -30,6 +30,9 @@ public class BookIndex {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     private Date updateTime;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    private Byte haswrong;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public Long getId() {
@@ -119,5 +122,15 @@ public class BookIndex {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public Byte getHaswrong() {
+        return haswrong;
+    }
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public void setHaswrong(Byte haswrong) {
+        this.haswrong = haswrong;
     }
 }

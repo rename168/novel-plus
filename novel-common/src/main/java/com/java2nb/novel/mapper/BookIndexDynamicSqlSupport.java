@@ -38,6 +38,9 @@ public final class BookIndexDynamicSqlSupport {
     public static final SqlColumn<Date> updateTime = bookIndex.updateTime;
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
+    public static final SqlColumn<Byte> haswrong = bookIndex.haswrong;
+
+    @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public static final class BookIndex extends SqlTable {
         public final SqlColumn<Long> id = column("id", JDBCType.BIGINT);
 
@@ -56,6 +59,8 @@ public final class BookIndexDynamicSqlSupport {
         public final SqlColumn<Date> createTime = column("create_time", JDBCType.TIMESTAMP);
 
         public final SqlColumn<Date> updateTime = column("update_time", JDBCType.TIMESTAMP);
+
+        public final SqlColumn<Byte> haswrong = column("hasWrong", JDBCType.TINYINT);
 
         public BookIndex() {
             super("book_index");
