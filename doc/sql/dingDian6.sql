@@ -32,5 +32,6 @@
 	"indexNamePatten": "<a\\s+style=\"\"\\s+href=\"/book\\d+/\\d+\\.html\">([^/]+)</a>",
 	"bookContentUrl": "https://www.dingdian6.com/book{bookId}/{indexId}.html",
 	"contentStart": "id=\"TXT\">",
-	"contentEnd": "<script"
+	"contentEnd": "<script",
+	"threadNum": "2"
 }
