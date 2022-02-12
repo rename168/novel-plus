@@ -111,21 +111,47 @@ public class CrawlServiceImpl implements CrawlService {
             CrawlSource source = queryCrawlSource(sourceId);
             Byte realSourceStatus = source.getSourceStatus();
 
+            int maxCate = 8;
             if (realSourceStatus == (byte) 0) {
                 //该爬虫源已经停止运行了,修改数据库状态，并启动线程爬取小说数据加入到runningCrawlThread中
                 SpringUtil.getBean(CrawlService.class).updateCrawlSourceStatus(sourceId, sourceStatus);
                 RuleBean ruleBean = new ObjectMapper().readValue(source.getCrawlRule(), RuleBean.class);
+                Integer threadNum = ruleBean.getThreadNum();
+                if(threadNum==null){
+                    threadNum = 8 ;
+                }else if(threadNum>8){
+                    threadNum = 8 ;
+                }
 
                 Set<Long> threadIds = new HashSet<>();
-                //按分类开始爬虫解析任务
-                for (int i = 1; i < 8; i++) {
-                    final int catId = i;
-                    Thread thread = new Thread(() -> CrawlServiceImpl.this.parseBookList(catId, ruleBean, sourceId));
+
+                int perThreadCount = (int) (maxCate/threadNum);
+                threadNum = (int) (maxCate/perThreadCount);
+                if(threadNum <8){
+                    log.error(" threadNum{}  perThreadCount{} "  , threadNum ,perThreadCount ) ;
+                }
+
+                for(int i  = 0 ; i< threadNum; i++ ){
+                    int begin = i *perThreadCount;
+                    Thread thread = new Thread(() ->{
+                        for( int j = begin ; j<begin+perThreadCount&& j<maxCate ; j++ ){
+                            final int catId = j;
+                            CrawlServiceImpl.this.parseBookList(catId, ruleBean, sourceId);
+                        }
+                    } );
                     thread.start();
                     //thread加入到监控缓存中
                     threadIds.add(thread.getId());
-
                 }
+                //按分类开始爬虫解析任务
+                // for (int i = 1; i < 8; i++) {
+                //     final int catId = i;
+                //     Thread thread = new Thread(() -> CrawlServiceImpl.this.parseBookList(catId, ruleBean, sourceId));
+                //     thread.start();
+                //     //thread加入到监控缓存中
+                //     threadIds.add(thread.getId());
+
+                // }
                 cacheService.setObject(CacheKey.RUNNING_CRAWL_THREAD_KEY_PREFIX + sourceId, threadIds);
 
 
@@ -310,7 +336,9 @@ public class CrawlServiceImpl implements CrawlService {
 
             } else {
                 //只更新书籍的爬虫相关字段
-                bookService.updateCrawlProperties(existBook.getId(), sourceId, bookId);
+                // bookService.updateCrawlProperties(existBook.getId(), sourceId, bookId);  其他网站趴的， 难道要更新？
+                log.info( " already exist book: {} anthor {} ",  book.getBookName(), book.getAuthorName());
+
             }
             parseResult.set(true);
         });

@@ -50,6 +50,7 @@ public class RuleBean {
     private String picUrlPrefix;
 
     private String bookIndexStart;
+    private Integer threadNum;
 
 
 }
