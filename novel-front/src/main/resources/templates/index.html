@@ -73,7 +73,7 @@
     <div class="channelWrap channelPic cf">
         <div class="leftBox">
             <div class="title">
-                <h2 class="on">热门推荐</h2>
+                <h2 class="on">热门推荐1</h2>
             </div>
             <div class="picRecommend cf" id="hotRecBooks" th:if="${bookMap['3']}">
                 <div class="itemsList" th:each="book : ${bookMap['3']}">
@@ -108,7 +108,7 @@
     <div class="channelWrap channelPic cf">
         <div class="leftBox">
             <div class="title">
-                <h2>精品推荐</h2>
+                <h2>精品推荐1</h2>
             </div>
             <div class="picRecommend cf" id="classicBooks" th:if="${bookMap['4']}">
                 <div class="itemsList" th:each="book : ${bookMap['4']}">
@@ -140,10 +140,47 @@
             </div>
         </div>
     </div>
+    <div class="channelWrap channelPic cf">
+        <div class="leftBox">
+            <div class="title">
+                <h2>玄幻小说</h2>
+            </div>
+            <div class="picRecommend cf" id="classicBooks" th:if="${bookMap['11']}">
+                <div class="itemsList" th:each="book : ${bookMap['11']}">
+                    <a class="items_img" th:href="'/book/'+${book.bookId}+'.html'">
+                        <img class="lazyload"  src="/images/default.gif" th:data-src="${book.picUrl}" th:alt="${book.bookName}">
+                    </a>
+                    <div class="items_txt">
+                        <h4><a th:href="'/book/'+${book.bookId}+'.html'" th:text="${book.bookName}"></a></h4>
+                        <p class="author"><a href="javascript:void(0)" th:text="'作者：'+${book.authorName}"></a></p>
+                        <p class="intro"><a th:href="'/book/'+${book.bookId}+'.html'" th:utext="${book.bookDesc}"></a>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- <div id="bookrank2_ShowBookRank">
+            <div class="rightBox ">
+                <div class="title cf">
+                    <h3 class="on">新书榜单</h3>
+                </div>
+                <div class="rightList">
+                    <ul id="newRankBooks">
+
+
+                    </ul>
+                    <div class="more"><a href="/book/book_ranking.html?type=1">查看更多&gt;</a></div>
+                </div>
+            </div>
+        </div> -->
+    </div>
+
+
     <div class="channelWrap channelTable cf">
         <div class="leftBox">
             <div class="title">
-                <h2>最新更新</h2>
+                <h2>最新更新2</h2>
             </div>
             <div class="updateTable">
                 <table cellpadding="0" cellspacing="0">
@@ -166,7 +203,7 @@
         <div id="bookrank5_ShowBookRank">
             <div class="rightBox mb20">
                 <div class="title cf">
-                    <h3 class="on">更新榜单</h3>
+                    <h3 class="on">更新榜单1</h3>
                 </div>
                 <div class="rightList">
                     <ul id="updateRankBooks">

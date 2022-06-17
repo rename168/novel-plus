@@ -82,4 +82,19 @@ public interface BookService {
      * @return 小说对象
      * */
     Book queryBookByBookNameAndAuthorName(String bookName, String authorName);
+
+    /**
+     * 查询网络图片的小说
+     *
+     * @param localPicPrefix
+     * @param limit 查询条数
+     * @return 返回小说集合
+     * */
+    List<Book> queryNetworkPicBooks(String localPicPrefix, Integer limit);
+        /**
+     * 更新爬取的小说网络图片到自己的存储介质（本地、OSS、fastDfs）
+     * @param picUrl 爬取的网络图片路径
+     * @param bookId 小说ID
+     */
+    void updateBookPicToLocal(String picUrl, Long bookId);
 }

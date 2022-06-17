@@ -1,5 +1,6 @@
 package com.java2nb.novel.service.impl;
 
+import com.java2nb.novel.core.utils.FileUtil;
 import com.java2nb.novel.entity.Book;
 import com.java2nb.novel.entity.BookContent;
 import com.java2nb.novel.entity.BookIndex;
@@ -8,7 +9,11 @@ import com.java2nb.novel.service.BookContentService;
 import com.java2nb.novel.service.BookService;
 import com.java2nb.novel.utils.Constants;
 import lombok.RequiredArgsConstructor;
+
+import org.apache.logging.log4j.Logger;
 import org.mybatis.dynamic.sql.render.RenderingStrategies;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +33,8 @@ import static org.mybatis.dynamic.sql.select.SelectDSL.select;
 /**
  * @author Administrator
  */
+@ConditionalOnProperty(prefix = "pic.save", name = "type", havingValue = "2")
+
 @Service
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
@@ -172,4 +179,33 @@ public class BookServiceImpl implements BookService {
 
     }
 
+
+    @Override
+    public List<Book> queryNetworkPicBooks(String localPicPrefix, Integer limit) {
+        return bookMapper.queryNetworkPicBooks(localPicPrefix,limit);
+    }
+
+    // private final FileService fileService;
+    /**
+     * 本地图片保存路径
+     */
+    @Value("${pic.save.path}")
+    private String picSavePath;
+
+    @Override
+    public void updateBookPicToLocal(String picUrl, Long bookId) {
+        // Logger.info("updateBookPicToLocal  %s ", picUrl );
+        // picUrl = fileService.transFile(picUrl, picSavePath);
+        picUrl = FileUtil.network2Local(picUrl, picSavePath, Constants.LOCAL_PIC_PREFIX);
+
+        bookMapper.update(update(BookDynamicSqlSupport.book)
+                .set(BookDynamicSqlSupport.picUrl)
+                .equalTo(picUrl)
+                .set(BookDynamicSqlSupport.updateTime)
+                .equalTo(new Date())
+                .where(BookDynamicSqlSupport.id, isEqualTo(bookId))
+                .build()
+                .render(RenderingStrategies.MYBATIS3));
+
+    }
 }

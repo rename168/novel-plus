@@ -117,10 +117,12 @@ public class BookServiceImpl implements BookService {
      */
     private List<BookSettingVO> initIndexBookSetting() {
         Date currentDate = new Date();
+        List<BookSettingVO> bookSettingVOList = new ArrayList<>(Constants.INDEX_BOOK_SETTING_NUM);
+        List<BookSetting> bookSettingList = new ArrayList<>(Constants.INDEX_BOOK_SETTING_NUM);
+
+        //推荐之类的
         List<Book> books = bookMapper.selectIdsByScoreAndRandom(Constants.INDEX_BOOK_SETTING_NUM);
         if (books.size() == Constants.INDEX_BOOK_SETTING_NUM) {
-            List<BookSetting> bookSettingList = new ArrayList<>(Constants.INDEX_BOOK_SETTING_NUM);
-            List<BookSettingVO> bookSettingVOList = new ArrayList<>(Constants.INDEX_BOOK_SETTING_NUM);
             for (int i = 0; i < books.size(); i++) {
                 Book book = books.get(i);
                 byte type;
@@ -148,12 +150,41 @@ public class BookServiceImpl implements BookService {
                 BeanUtils.copyProperties(bookSetting, bookSettingVO);
                 bookSettingVOList.add(bookSettingVO);
             }
-
-            bookSettingMapper.insertMultiple(bookSettingList);
-
-            return bookSettingVOList;
         }
-        return new ArrayList<>(0);
+
+
+
+        for( int j  = 1; j<=7 ; j++){
+
+            List<Book> catBooks = bookMapper.listRecBookByCatId( j );
+            for (int i = 0; i < catBooks.size(); i++) {
+                Book book = catBooks.get(i);
+                byte type = (byte)(10+j); //从10开始
+
+                BookSettingVO bookSettingVO = new BookSettingVO();
+                BookSetting bookSetting = new BookSetting();
+                bookSetting.setType(type);
+                bookSetting.setSort((byte) j);
+                bookSetting.setBookId(book.getId());
+                bookSetting.setCreateTime(currentDate);
+                bookSetting.setUpdateTime(currentDate);
+                bookSettingList.add(bookSetting);
+
+                BeanUtils.copyProperties(book, bookSettingVO);
+                BeanUtils.copyProperties(bookSetting, bookSettingVO);
+                bookSettingVOList.add(bookSettingVO);
+            }
+
+        }
+
+
+
+
+
+
+        bookSettingMapper.insertMultiple(bookSettingList);
+        return bookSettingVOList;
+        // return new ArrayList<>(0);
     }
 
 

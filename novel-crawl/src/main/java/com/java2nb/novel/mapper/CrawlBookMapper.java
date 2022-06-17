@@ -32,4 +32,7 @@ public interface CrawlBookMapper extends BookMapper {
      * @param currentDate 当前时间
      * */
     void updateCrawlLastTime(@Param("books") List<Book> books,@Param("currentDate") Date currentDate);
+
+    List<Book> queryNetworkPicBooks(@Param("localPicPrefix") String localPicPrefix, @Param("limit") Integer limit);
+
 }

@@ -1,5 +1,5 @@
 {
-	"bookListUrl": "http://wap.xbiquge.la/sort/{catId}/0_{page}.html",
+	"bookListUrl": "http://wap.xbiquge.la/wapsort/{catId}/0_{page}.html",
 	"catIdRule": {
 		"catId1": "1",
 		"catId2": "2",
@@ -12,7 +12,7 @@
 	"bookIdPatten": "href=\"/s/(\\d+)\\.html\"",
 	"pagePatten": "第(\\d+)/\\d+页",
 	"totalPagePatten": "第\\d+/(\\d+)页",
-	"bookDetailUrl": "http://wap.xbiquge.la/s/{bookId}.html",
+	"bookDetailUrl": "http://wap.xbiquge.la/wapbook/{bookId}.html",
 	"bookNamePatten": "<a\\s+href=\"/s/\\d+\\.html\"><h2>([^/]+)</h2></a>",
 	"authorNamePatten": "<p>作者：([^/]+)</p>",
 	"picUrlPatten": "src=\"(https://www.xbiquge.la/files/article/image/\\d+/\\d+/\\d+s\\.jpg)\"",
@@ -29,5 +29,6 @@
 	"indexNamePatten": "<dd><a\\s+href=\"\\d+\\.html\">([^/]+)</a></dd>",
 	"bookContentUrl": "http://www.xbiquge.la/txt/{bookId}/{indexId}.html",
 	"contentStart": "<div id=\"content\" class=\"showtxt\">",
-	"contentEnd": "https://www.xbiquge.la"
+	"contentEnd": "https://www.xbiquge.la",
+	"threadNum": "1"
 }

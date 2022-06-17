@@ -40,10 +40,10 @@
     </update>
 
     <select id="listRecBookByCatId" parameterType="int" resultType="com.java2nb.novel.entity.Book">
-        select id,pic_url,book_name,book_desc
+        select id,pic_url,book_name,book_desc,author_name
         from book
         where cat_id = #{catId}
-        order by RAND() LIMIT 4
+        order by RAND() LIMIT 6
     </select>
 
 

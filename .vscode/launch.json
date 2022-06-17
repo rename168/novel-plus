@@ -1,0 +1,22 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-CrawlNovelApplication<novel-crawl>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.java2nb.novel.CrawlNovelApplication",
+            "projectName": "novel-crawl",
+            "args": ""
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-FrontNovelApplication<novel-front>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.java2nb.novel.FrontNovelApplication",
+            "projectName": "novel-front",
+            "args": ""
+        }
+    ]
+}

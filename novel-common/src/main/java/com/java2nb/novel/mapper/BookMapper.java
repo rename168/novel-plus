@@ -359,4 +359,5 @@ public interface BookMapper {
                         .where(id, isEqualTo(record::getId))
         );
     }
+
 }

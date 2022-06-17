@@ -65,4 +65,10 @@ public interface CacheKey {
      * 累积的小说点击量
      * */
     String BOOK_ADD_VISIT_COUNT = "bookAddVisitCount";
+
+    /**
+     * 保存图片到自己的存储介质路径前缀
+     * */
+    public static final String LOCAL_PIC_PREFIX = "/localPic/";
+
 }
