@@ -131,27 +131,28 @@ public class CrawlServiceImpl implements CrawlService {
                     log.error(" threadNum{}  perThreadCount{} "  , threadNum ,perThreadCount ) ;
                 }
 
-                for(int i  = 0 ; i< threadNum; i++ ){
-                    int begin = i *perThreadCount;
-                    Thread thread = new Thread(() ->{
-                        for( int j = begin ; j<begin+perThreadCount&& j<maxCate ; j++ ){
-                            final int catId = j;
-                            CrawlServiceImpl.this.parseBookList(catId, ruleBean, sourceId);
-                        }
-                    } );
+                // for(int i  = 0 ; i< threadNum; i++ ){
+                //     int begin = i *perThreadCount;
+                //     Thread thread = new Thread(() ->{
+                //         for( int j = begin ; j<begin+perThreadCount&& j<maxCate ; j++ ){
+                //             final int catId = j;
+                //             CrawlServiceImpl.this.parseBookList(catId, ruleBean, sourceId);
+                //         }
+                //     } );
+                //     thread.start();
+                //     //thread加入到监控缓存中
+                //     threadIds.add(thread.getId());
+                // }
+
+
+                //按分类开始爬虫解析任务
+                for (int i = 1; i < 8; i++) {
+                    final int catId = i;
+                    Thread thread = new Thread(() -> CrawlServiceImpl.this.parseBookList(catId, ruleBean, sourceId));
                     thread.start();
                     //thread加入到监控缓存中
                     threadIds.add(thread.getId());
                 }
-                //按分类开始爬虫解析任务
-                // for (int i = 1; i < 8; i++) {
-                //     final int catId = i;
-                //     Thread thread = new Thread(() -> CrawlServiceImpl.this.parseBookList(catId, ruleBean, sourceId));
-                //     thread.start();
-                //     //thread加入到监控缓存中
-                //     threadIds.add(thread.getId());
-
-                // }
                 cacheService.setObject(CacheKey.RUNNING_CRAWL_THREAD_KEY_PREFIX + sourceId, threadIds);
 
 

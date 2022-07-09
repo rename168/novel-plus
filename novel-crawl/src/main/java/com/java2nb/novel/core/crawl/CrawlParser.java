@@ -63,7 +63,7 @@ public class CrawlParser {
                         boolean isFindPicUrl = picUrlMatch.find();
                         if (isFindPicUrl) {
                             String picUrl = picUrlMatch.group(1);
-                            if(StringUtils.isNotBlank ( ruleBean.getPicUrlPrefix().trim() )){
+                            if(StringUtils.isNotBlank ( ruleBean.getPicUrlPrefix()) && StringUtils.isNotBlank ( ruleBean.getPicUrlPrefix().trim() )){
                                 log.error( " pic url prefix null   getBookIndexUrl:{}" , ruleBean.getBookIndexUrl() ) ;
                             }
                             if (StringUtils.isNotBlank(picUrl) && StringUtils.isNotBlank(ruleBean.getPicUrlPrefix())) {
