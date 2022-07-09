@@ -229,7 +229,7 @@ public class CrawlParser {
 
                     // 查询章节内容
                     String contentHtml = getByHttpClientWithChrome(contentUrl);
-                    if (contentHtml != null) {
+                    if (contentHtml == null) {
                         try {
 							Thread.sleep(1000);
 						} catch (InterruptedException e) { }
