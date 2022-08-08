@@ -247,7 +247,7 @@ public class CrawlParser {
                         BookIndex bookIndex = new BookIndex();
 
                         if (contentHtml.contains("正在手打中")){
-                            log.error(" wrong content  正在手打中  contentUrl%s   ",contentUrl    );
+                            log.error(" wrong content  正在手打中  contentUrl {}   ",contentUrl    );
                             bookIndex.setHaswrong((byte)1);
                         }else {
                             bookIndex.setHaswrong((byte)0);

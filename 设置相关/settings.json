@@ -1,0 +1,75 @@
+{
+    // "php.validate.executablePath": "D:\\xampp\\php\\php.exe",
+    // "php.executablePath": "D:\\xampp\\php\\php.exe",
+    "php.validate.executablePath": "D:/xampp/php/php.exe",
+    "php.executablePath": "D:/xampp/php/php.exe",
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    // "java.home":"C:/Java/jdk-11.0.2",
+    // "java.jdt.ls.java.home": "c:/Java/jdk-11.0.2",
+    "java.home":"C:/Program Files/Eclipse Adoptium/jdk-17.0.3.7-hotspot",
+    "java.jdt.ls.java.home": "C:/Program Files/Eclipse Adoptium/jdk-17.0.3.7-hotspot",
+    // "java.home":"c:/Java/jdk1.8.0_202",
+    // "java.jdt.ls.java.home": "c:/Java/jdk1.8.0_202",
+
+    "java.configuration.runtimes": [
+      // {
+      //   "name": "JavaSE-1.8",
+      //   "path": "c:/Java/jdk1.8.0_202",
+      // },
+      // {
+      //   "name": "JavaSE-11",
+      //   "path": "c:/Java/jdk-11.0.2",
+      //   "default": true
+      // },
+      {
+        "name": "JavaSE-17",
+        "path": "C:/Program Files/Eclipse Adoptium/jdk-17.0.3.7-hotspot",
+        "default": true
+      },
+    ],
+
+
+
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
+    },
+    "java.requirements.JDK11Warning": false,
+    "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m -javaagent:\"c:\\Users\\admin\\.vscode\\extensions\\gabrielbb.vscode-lombok-1.0.1\\server\\lombok.jar\"",
+    "java.semanticHighlighting.enabled": true,
+    "maven.executable.path": "C:\\Java\\apache-maven-3.8.4\\bin\\mvn",
+    "[java]": {
+      "editor.defaultFormatter": "redhat.java"
+    },
+    "maven.terminal.customEnv":[{
+       "environmentVariable": "JAVA_HOME",
+      //  "value": "C:/Java/jdk-11.0.2"
+       "value":"C:/Program Files/Eclipse Adoptium/jdk-17.0.3.7-hotspot",
+      //  "value": "c:/Java/jdk1.8.0_202"
+
+    }],
+    "maven.executable.preferMavenWrapper": true,
+    "redhat.telemetry.enabled": true,
+
+    //powershell beging
+    "editor.renderWhitespace": "all",
+    "editor.renderControlCharacters": true,
+    "files.trimTrailingWhitespace": true,
+    "files.encoding": "utf8bom",
+    "files.autoGuessEncoding": true,
+    "terminal.integrated.scrollback": 100000,
+    "security.workspace.trust.untrustedFiles": "open",
+    "rsp-ui.enableStartServerOnActivation": [
+      {
+        "id": "redhat.vscode-community-server-connector",
+        "name": "Community Server Connector",
+        "startOnActivation": true
+      }
+    ],
+    "z-reader.onlineSite": "笔趣阁",
+    "z-reader.fileDir": "D:\\新建文件夹\\story"
+    //powershell end
+}
