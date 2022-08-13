@@ -36,8 +36,13 @@
         </div>
         <div class="my_r">
             <div class="my_bookshelf">
+
                 <div class="title cf">
                     <h2 class="fl">爬虫源列表</h2>
+                    <div class="fr">
+                        <!-- <a href="/crawl/crawlSource_add.html" class="btn_red">加载本地txt</a> -->
+                        <a href='javascript:loadTxt( )'  class="btn_gray">  加载本地txt    </a>
+                    </div>
                     <div class="fr"><a href="/crawl/crawlSource_add.html" class="btn_red">增加爬虫源</a></div>
                 </div>
 
@@ -195,6 +200,43 @@
             }
         })
 
+    }
+
+
+    function loadTxt( ) {
+
+        $.ajax({
+            type: "POST",
+            url: "/crawl/loadTxt",
+            data: {'sourceId':111,'sourceStatus':status==0?1:0},
+            dataType: "json",
+            success: function (data) {
+                if (data.code == 200) {
+                    layer.alert( "正在处理中。。。");
+                    // if(status == 0){
+                    //     //开启
+                    //     $("#sourceStatus"+sourceId).html("正在运行");
+                    //     $("#opt"+sourceId).html("<a href='javascript:openOrStopCrawl("+sourceId+","+1+")'>关闭</a>");
+                    // }else{
+                    //     //关闭
+                    //     $("#sourceStatus"+sourceId).html("停止运行");
+                    //     $("#opt"+sourceId).html("<a href='javascript:openOrStopCrawl("+sourceId+","+0+")'>开启</a>");
+                    // }
+
+
+                } else if (data.code == 1001) {
+                    //未登录
+
+
+                }else {
+                    layer.alert(data.msg);
+                }
+
+            },
+            error: function () {
+                layer.alert('网络异常');
+            }
+        })
     }
 
 

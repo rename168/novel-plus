@@ -35,6 +35,13 @@ public interface CrawlService {
     void openOrCloseCrawl(Integer sourceId, Byte sourceStatus);
 
     /**
+     * 加载txt
+     * @param sourceId 爬虫源ID
+     * @param sourceStatus 状态，0关闭，1开启
+     * */
+    void loadTxt( );
+
+    /**
      * 更新爬虫状态
      * @param sourceId 爬虫源ID
      * @param sourceStatus 状态，0关闭，1开启

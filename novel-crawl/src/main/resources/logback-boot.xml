@@ -17,7 +17,7 @@
              -->
             <pattern>${CONSOLE_LOG_PATTERN}</pattern>
             <!-- 控制台也要使用UTF-8，不要使用GBK，否则会中文乱码 -->
-            <charset>UTF-8</charset>
+            <charset>GBK</charset>
         </encoder>
     </appender>
 
@@ -57,13 +57,13 @@
     <!-- 指定项目中某个包，当有日志操作行为时的日志记录级别 -->
     <!-- com.maijinjie.springboot 为根包，也就是只要是发生在这个根包下面的所有日志操作行为的权限都是DEBUG -->
     <!-- 级别依次为【从高到低】：FATAL > ERROR > WARN > INFO > DEBUG > TRACE -->
-    <logger name="com.java2nb" level="DEBUG">
+    <!-- <logger name="com.java2nb" level="DEBUG">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="FILE" />
-    </logger>
+    </logger> -->
 
     <logger name="org.apache.ibatis" level="warn"/>
     <logger name="org.mybatis" level="warn"/>
     <logger name="org.apache.ibatis.logging.jdbc.BaseJdbcLogger" level="warn" />
- 
+
 </configuration>
