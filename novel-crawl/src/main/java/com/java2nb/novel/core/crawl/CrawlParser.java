@@ -26,7 +26,7 @@ import static java.util.regex.Pattern.compile;
 @Slf4j
 public class CrawlParser {
 
-    private static final IdWorker idWorker = new IdWorker();
+    public static final IdWorker idWorker = new IdWorker();
 
     private static final RestTemplate restTemplate = RestTemplateUtil.getInstance("utf-8");
 

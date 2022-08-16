@@ -14,8 +14,11 @@ import com.java2nb.novel.core.exception.BusinessException;
 import com.java2nb.novel.core.utils.BeanUtil;
 import com.java2nb.novel.core.utils.IdWorker;
 import com.java2nb.novel.core.utils.SpringUtil;
+import com.java2nb.novel.core.utils.StringUtil;
 import com.java2nb.novel.core.utils.ThreadUtil;
 import com.java2nb.novel.entity.Book;
+import com.java2nb.novel.entity.BookContent;
+import com.java2nb.novel.entity.BookIndex;
 import com.java2nb.novel.entity.CrawlSingleTask;
 import com.java2nb.novel.entity.CrawlSource;
 import com.java2nb.novel.mapper.CrawlSingleTaskDynamicSqlSupport;
@@ -146,7 +149,7 @@ public class CrawlServiceImpl implements CrawlService {
             if (item.equals("------------")) {
                 continue;
             }
-            if (item.trim().length() > 2) {
+            if (item.trim().length() > 0) {
                 name = item;
                 return name;
             }
@@ -154,7 +157,22 @@ public class CrawlServiceImpl implements CrawlService {
         return "";
     }
 
+    private String concatContent(ArrayList<String> chapterContentList) {
+        StringBuilder re = new StringBuilder();
+        String tmpItem;
+        // re.append("\r\n");
+        for (int i = 0; i < chapterContentList.size(); i++) {
+            tmpItem = chapterContentList.get(i);
+            re.append(tmpItem);
+            re.append("\r\n");
+        }
+
+        return re.toString();
+    }
+
     public void parseLocalBook(TxtBookData bookItem) {
+        Date currentDate = new Date();
+
         String filePath = String.format("%s\\%s\\%s", baseDir, "txtFile", bookItem.title);
 
         File file = new File(filePath);
@@ -163,12 +181,8 @@ public class CrawlServiceImpl implements CrawlService {
             log.error("file not fond: {} ", bookItem.title);
             return;
         }
-
-        // String content = readToString(filePath);
-
-        // BufferedReader in;
         ArrayList<String> lines = new ArrayList<>();
-        ArrayList<ChapterData> chapterList = new ArrayList<>();
+        // ArrayList<ChapterData> chapterList = new ArrayList<>();
         try {
             // in = new BufferedReader(new FileReader(filePath));
             BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(filePath), "utf-8"));
@@ -182,22 +196,110 @@ public class CrawlServiceImpl implements CrawlService {
             e.printStackTrace();
         }
 
-        Iterator<String> it = lines.iterator();
+        // String content = readToString(filePath);
 
+        // BufferedReader in;
+
+        Book book = new Book();
+        List<BookIndex> bookIndexList = new ArrayList<BookIndex>();
+        List<BookContent> bookContentList = new ArrayList<BookContent>();
+
+        book.setAuthorName(bookItem.author);
+        book.setBookName(bookItem.title);
+        book.setId(Long.parseLong(bookItem.code));
+        book.setCatId(bookItem.type + 1);
+        if (book.getCatId() == 7) {
+            // 女频
+            book.setWorkDirection((byte) 1);
+        } else {
+            // 男频
+            book.setWorkDirection((byte) 0);
+        }
+
+        book.setCatName(bookService.queryCatNameByCatId(book.getCatId()));
+
+        book.setCrawlBookId(bookItem.code);
+        book.setCrawlSourceId(0);
+        book.setCrawlLastTime(currentDate);
+        book.setPicUrl("-");
+        book.setBookDesc("-");
+        book.setScore(1f);
+        book.setVisitCount(1l);
+        book.setBookStatus((byte) 1);
+        book.setLastIndexUpdateTime(currentDate);
+
+        int totalWordCount = 0;
+
+        Iterator<String> it = lines.iterator();
+        int indexNum = 0;
         while (it.hasNext()) {
             // String item = (String) it.next();
             // if (item.equals("------------")) {
             String chapterName = findChapterName(it);
-            ArrayList<String> chapterContent = findContent(it);
-            ChapterData data = new ChapterData();
-            data.chapterName = chapterName;
-            data.content = chapterContent;
-            chapterList.add(data);
+            ArrayList<String> chapterContentList = findContent(it);
+            String content = concatContent(chapterContentList);
+            // ChapterData data = new ChapterData();
+            // data.chapterName = chapterName;
+            // data.content = chapterContent;
+
+            // chapterList.add(data);
+            if (chapterName.trim().equals("正文") ||
+                    chapterName.trim().equals("正文卷") ||
+                    chapterContentList.size() <= 2) {
+                if (chapterContentList.size() <= 2) {
+
+                    log.info(" 正文卷过滤 content len{}", chapterContentList.size());
+                } else {
+                    log.info(" 正文卷异常 chapter: {}  content len{}", chapterName, chapterContentList.size());
+                }
+            } else {
+                log.info(" fond chapter: {}  content len{}", chapterName, chapterContentList.size());
+
+                BookIndex bookIndex = new BookIndex();
+                bookIndex.setIndexName(chapterName);
+                bookIndex.setIndexNum(indexNum);
+
+                int wordCount = StringUtil.getStrValidWordCount(content);
+                bookIndex.setWordCount(wordCount);
+
+                BookContent bookContent = new BookContent();
+                bookContent.setContent(content);
+
+                bookContentList.add(bookContent);
+                bookIndexList.add(bookIndex);
+
+                // Long indexId = CrawlParser.idWorker.nextId();
+                Long indexId = book.getId() * 100000l + indexNum;
+
+                bookIndex.setId(indexId);
+                bookIndex.setBookId(book.getId());
+
+                bookIndex.setCreateTime(currentDate);
+                bookContent.setIndexId(indexId);
+
+                if (content.contains("正在手打中")) {
+                    log.error(" wrong content  正在手打中getBookName{}  chapterName {}   indexId{}", book.getBookName(),
+                            chapterName, indexId);
+                    bookIndex.setHaswrong((byte) 1);
+                } else {
+                    bookIndex.setHaswrong((byte) 0);
+                }
+
+                // 计算总字数
+                totalWordCount += wordCount;
+
+                indexNum++;
+            }
             // System.out.println(" fond chapter: {}" + chapterName);
-            log.info(" fond chapter: {}", chapterName);
             // }
         }
 
+        book.setWordCount(totalWordCount);
+        book.setUpdateTime(currentDate);
+        book.setLastIndexId(bookIndexList.get(bookIndexList.size() - 1).getId());
+        book.setLastIndexName(bookIndexList.get(bookIndexList.size() - 1).getIndexName());
+
+        bookService.saveBookAndIndexAndContent(book, bookIndexList, bookContentList);
     }
 
     /**

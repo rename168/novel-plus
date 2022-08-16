@@ -39,6 +39,6 @@ public class BookContent {
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
+        this.content = content == null ? null : content;
     }
 }

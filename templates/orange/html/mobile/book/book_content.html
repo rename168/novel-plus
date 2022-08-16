@@ -159,6 +159,10 @@
             bottom: 100px;
             text-align: center;
         }
+        .contentTxt {
+            font-family: auto;
+            white-space: pre-wrap;
+        }
 
 
     </style>
@@ -232,8 +236,11 @@
 <div id="chaptercontent" class="Readarea ReadAjax_content screen_container"
      style="color: rgb(0, 0, 0); font-size: 20px;" th:if="${!needBuy}">
     <p style="width:100%;text-alight:center; overflow: auto;-webkit-overflow-scrolling:touch;" >&nbsp;&nbsp;&nbsp;&nbsp;
-        <span
-                 th:utext="${bookContent.content}"></span></p>
+        <!-- <span
+                 th:utext="${bookContent.content}"></span></p> -->
+        <pre class="contentTxt" th:text="${bookContent.content}"> 内容 </pre>
+    </p>
+
 </div>
 <div  class="Readarea ReadAjax_content screen_container"
      style="color: rgb(0, 0, 0); font-size: 20px;background-color: #fff" th:if="${needBuy}">
