@@ -18,4 +18,11 @@ public class TxtBookData {
     public String code;
     public Integer type;
 
+    public String imgUrl;
+    public String desc;
+    public String catName;
+    public String complete;
+
+
+
 }

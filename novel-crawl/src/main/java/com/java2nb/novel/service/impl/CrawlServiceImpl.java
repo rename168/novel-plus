@@ -170,6 +170,29 @@ public class CrawlServiceImpl implements CrawlService {
         return re.toString();
     }
 
+    public int checkCatId(String catName, int type) {
+        if (catName == null)
+            return type;
+
+        if (catName.contains("玄幻") || catName.contains("修真")) {
+            return 1;
+        } else if (catName.contains("武侠") || catName.contains("仙侠")) {
+            return 2;
+        } else if (catName.contains("都市") || catName.contains("言情")) {
+            return 3;
+        } else if (catName.contains("历史") || catName.contains("军事")) {
+            return 4;
+        } else if (catName.contains("科幻") || catName.contains("灵异")) {
+            return 5;
+        } else if (catName.contains("网游") || catName.contains("竞技")) {
+            return 6;
+        } else if (catName.contains("女生") || catName.contains("女频")) {
+            return 7;
+        }
+
+        return 1;
+    }
+
     public void parseLocalBook(TxtBookData bookItem) {
         Date currentDate = new Date();
 
@@ -207,7 +230,7 @@ public class CrawlServiceImpl implements CrawlService {
         book.setAuthorName(bookItem.author);
         book.setBookName(bookItem.title);
         book.setId(Long.parseLong(bookItem.code));
-        book.setCatId(bookItem.type + 1);
+        book.setCatId(checkCatId(bookItem.catName, bookItem.type + 1));
         if (book.getCatId() == 7) {
             // 女频
             book.setWorkDirection((byte) 1);
@@ -221,11 +244,30 @@ public class CrawlServiceImpl implements CrawlService {
         book.setCrawlBookId(bookItem.code);
         book.setCrawlSourceId(0);
         book.setCrawlLastTime(currentDate);
-        book.setPicUrl("-");
-        book.setBookDesc("-");
+        if (bookItem.imgUrl != null)
+            book.setPicUrl(bookItem.imgUrl);
+        else {
+            book.setPicUrl("-");
+        }
+        if (bookItem.desc != null)
+            book.setBookDesc(bookItem.desc);
+        else {
+
+            book.setBookDesc("-");
+        }
+
         book.setScore(1f);
         book.setVisitCount(1l);
-        book.setBookStatus((byte) 1);
+        if (bookItem.complete != null) {
+            if (bookItem.complete.equals("连载")) {
+                book.setBookStatus((byte) 0);
+            } else {
+                book.setBookStatus((byte) 1);
+            }
+        } else {
+            book.setBookStatus((byte) 0);
+        }
+
         book.setLastIndexUpdateTime(currentDate);
 
         int totalWordCount = 0;
