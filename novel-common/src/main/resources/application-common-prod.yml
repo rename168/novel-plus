@@ -67,17 +67,17 @@ sharding:
                 algorithm-expression: book_content${index_id % 10}
 
 
-logging:
-  level:
-    root: error
-    com.java2nb: error
+# logging:
+#   level:
+#     root: error
+#     com.java2nb: error
 
 
 
 txt:
   save:
-    storage: db #存储介质，db：数据库，file：txt文本
-    path: C:/novelData  #txt小说文本保存路径
+    storage: file #存储介质，db：数据库，file：txt文本
+    path: C:/novelData/books  #txt小说文本保存路径
 
 pic:
   save:

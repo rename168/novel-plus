@@ -35,6 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.mybatis.dynamic.sql.render.RenderingStrategies;
 import org.mybatis.dynamic.sql.select.render.SelectStatementProvider;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -122,7 +123,9 @@ public class CrawlServiceImpl implements CrawlService {
         return re;// 返回文件内容,默认编码
     }
 
-    String baseDir = "D:\\work\\xiaoshuo\\novelPrivate\\down_kenshu\\javaTest";
+    // String baseDir = "D:\\work\\xiaoshuo\\novelPrivate\\down_kenshu\\javaTest";
+    @Value("${txt.save.path}")
+    private String fileSavePath;
 
     ArrayList<String> filterList = new ArrayList<String>() {
 
@@ -195,6 +198,7 @@ public class CrawlServiceImpl implements CrawlService {
 
     public void parseLocalBook(TxtBookData bookItem) {
         Date currentDate = new Date();
+        String baseDir = fileSavePath + "\\..\\javaTest";
 
         String filePath = String.format("%s\\%s\\%s", baseDir, "txtFile", bookItem.title);
 
@@ -357,7 +361,7 @@ public class CrawlServiceImpl implements CrawlService {
         String path2 = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
 
         log.info(" ---------loadTxt  path2{}  ", path2);
-
+        String baseDir = fileSavePath + "\\..\\javaTest";
         String content = readToString(baseDir + "\\bookListJson.json");
         log.info(" ---------loadTxt  content {}  ", content);
 
