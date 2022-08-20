@@ -1,4 +1,4 @@
-﻿package com.java2nb.novel.service.impl;
+package com.java2nb.novel.service.impl;
 
 import lombok.Data;
 
