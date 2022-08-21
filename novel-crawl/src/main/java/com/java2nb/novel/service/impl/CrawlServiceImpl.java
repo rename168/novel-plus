@@ -111,7 +111,11 @@ public class CrawlServiceImpl implements CrawlService {
             BufferedReader read = new BufferedReader(new InputStreamReader(in, "utf-8"));
             read.read(filecontent);
             // in.read(filecontent, "utf-8");
+            read.close();
             in.close();
+            read = null;
+            in = null;
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -197,17 +201,24 @@ public class CrawlServiceImpl implements CrawlService {
     }
 
     public void parseLocalBook(TxtBookData bookItem) {
-        Date currentDate = new Date();
-        String baseDir = fileSavePath + "\\..\\javaTest";
 
-        String filePath = String.format("%s\\%s\\%s", baseDir, "txtFile", bookItem.title);
+        Date currentDate = new Date();
+        String baseDir = fileSavePath + "/../javaTest";
+
+        String filePath = String.format("%s/%s/%s", baseDir, "txtFile", bookItem.title);
 
         File file = new File(filePath);
 
         if (!file.exists()) {
-            log.error("file not fond: {} ", bookItem.title);
+            // log.error("file not fond: {} ", bookItem.title);
             return;
         }
+        if (bookService.queryIsExistByBookNameAndAuthorName(bookItem.title, bookItem.author)) {
+            // log.error(" data base exist: {} ", bookItem.title);
+
+            return;
+        }
+
         ArrayList<String> lines = new ArrayList<>();
         // ArrayList<ChapterData> chapterList = new ArrayList<>();
         try {
@@ -254,7 +265,11 @@ public class CrawlServiceImpl implements CrawlService {
             book.setPicUrl("-");
         }
         if (bookItem.desc != null)
-            book.setBookDesc(bookItem.desc);
+            if (bookItem.desc.length() > 1900) {
+                book.setBookDesc(bookItem.desc.substring(0, 1900));
+                log.error(" desc too long !  {} ", bookItem.desc);
+            } else
+                book.setBookDesc(bookItem.desc);
         else {
 
             book.setBookDesc("-");
@@ -284,6 +299,14 @@ public class CrawlServiceImpl implements CrawlService {
             String chapterName = findChapterName(it);
             ArrayList<String> chapterContentList = findContent(it);
             String content = concatContent(chapterContentList);
+
+            if (chapterName.length() > 80) {
+                log.error(" 章节名错误  书名：{}    当前章: {}", bookItem.title,
+                        chapterName);
+                // chapterName = chapterName.substring(0, 50);
+
+                return;
+            }
             // ChapterData data = new ChapterData();
             // data.chapterName = chapterName;
             // data.content = chapterContent;
@@ -340,12 +363,18 @@ public class CrawlServiceImpl implements CrawlService {
             // }
         }
 
-        book.setWordCount(totalWordCount);
-        book.setUpdateTime(currentDate);
-        book.setLastIndexId(bookIndexList.get(bookIndexList.size() - 1).getId());
-        book.setLastIndexName(bookIndexList.get(bookIndexList.size() - 1).getIndexName());
+        if (bookIndexList.size() > 0) {
 
-        bookService.saveBookAndIndexAndContent(book, bookIndexList, bookContentList);
+            book.setWordCount(totalWordCount);
+            book.setUpdateTime(currentDate);
+            book.setLastIndexId(bookIndexList.get(bookIndexList.size() - 1).getId());
+            book.setLastIndexName(bookIndexList.get(bookIndexList.size() - 1).getIndexName());
+            try {
+                bookService.saveBookAndIndexAndContent(book, bookIndexList, bookContentList);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
@@ -361,16 +390,16 @@ public class CrawlServiceImpl implements CrawlService {
         String path2 = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
 
         log.info(" ---------loadTxt  path2{}  ", path2);
-        String baseDir = fileSavePath + "\\..\\javaTest";
-        String content = readToString(baseDir + "\\bookListJson.json");
-        log.info(" ---------loadTxt  content {}  ", content);
+        String baseDir = fileSavePath + "/../javaTest";
+        String content = readToString(baseDir + "/bookListJson.json");
+        // log.info(" ---------loadTxt content {} ", content);
 
         // TxtBookData[] tableNames = new TxtBookData[] {};
         ArrayList<TxtBookData> txtList = (ArrayList<TxtBookData>) JSON.parseArray(content, TxtBookData.class);
 
         for (int i = 0; i < txtList.size(); i++) {
             TxtBookData bookItem = txtList.get(i);
-            log.info(" ---------TxtBookData    {}  ", bookItem);
+            // log.info(" ---------TxtBookData {} ", bookItem);
             parseLocalBook(bookItem);
         }
 
