@@ -53,6 +53,7 @@ public class StarterListener implements ServletContextListener {
                         for (Book needUpdateBook : bookList) {
                             try {
                                 //查询爬虫源规则
+                                if(needUpdateBook.getCrawlSourceId()==0)continue ; 
                                 CrawlSource source = crawlService.queryCrawlSource(needUpdateBook.getCrawlSourceId());
                                 RuleBean ruleBean = new ObjectMapper().readValue(source.getCrawlRule(), RuleBean.class);
                                 //解析小说基本信息
