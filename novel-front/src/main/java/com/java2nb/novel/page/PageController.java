@@ -119,17 +119,18 @@ public class PageController extends BaseController {
     @SneakyThrows
     @RequestMapping("/book/{bookId}.html")
     public String bookDetail(@PathVariable("bookId") Long bookId, Model model) {
+        long beginTime = System.currentTimeMillis();
         //加载小说基本信息线程
         CompletableFuture<Book> bookCompletableFuture = CompletableFuture.supplyAsync(() -> {
             //查询书籍
             Book book = bookService.queryBookDetail(bookId);
-            log.debug("加载小说基本信息线程结束");
+            log.debug("加载小说基本信息线程结束 time: {}" , System.currentTimeMillis() - beginTime);
             return book;
         }, threadPoolExecutor);
         //加载小说评论列表线程
         CompletableFuture<PageBean<BookCommentVO>> bookCommentPageBeanCompletableFuture = CompletableFuture.supplyAsync(() -> {
             PageBean<BookCommentVO> bookCommentVOPageBean = bookService.listCommentByPage(null, bookId, 1, 5);
-            log.debug("加载小说评论列表线程结束");
+            log.debug("加载小说评论列表线程结束 time: {}" , System.currentTimeMillis() - beginTime);
             return bookCommentVOPageBean;
         }, threadPoolExecutor);
         //加载小说首章信息线程，该线程在加载小说基本信息线程执行完毕后才执行
@@ -137,7 +138,7 @@ public class PageController extends BaseController {
             if (book.getLastIndexId() != null) {
                 //查询首章目录ID
                 Long firstBookIndexId = bookService.queryFirstBookIndexId(bookId);
-                log.debug("加载小说基本信息线程结束");
+                log.debug("加载小说基本信息线程结束 time: {}" , System.currentTimeMillis() - beginTime);
                 return firstBookIndexId;
             }
             return null;
@@ -145,7 +146,7 @@ public class PageController extends BaseController {
         //加载随机推荐小说线程，该线程在加载小说基本信息线程执行完毕后才执行
         CompletableFuture<List<Book>> recBookCompletableFuture = bookCompletableFuture.thenApplyAsync((book) -> {
             List<Book> books = bookService.listRecBookByCatId(book.getCatId());
-            log.debug("加载随机推荐小说线程结束");
+            log.debug("加载随机推荐小说线程结束 time: {}" , System.currentTimeMillis() - beginTime);
             return books;
         }, threadPoolExecutor);
 
